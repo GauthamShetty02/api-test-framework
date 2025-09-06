@@ -92,7 +92,7 @@ pipeline {
                         ssh -i \$SSH_KEY -o StrictHostKeyChecking=no ${params.VPS_USER}@${params.VPS_IP} "cp ${params.DEPLOY_PATH}/generate-index.sh ${params.DEPLOY_PATH}/${params.PROJECT_NAME}/"
                         
                         # Generate project-specific index
-                        ssh -i \$SSH_KEY -o StrictHostKeyChecking=no ${params.VPS_USER}@${params.VPS_IP} "cd ${params.DEPLOY_PATH}/${params.PROJECT_NAME} && chmod +x generate-index.sh && ./generate-index.sh ${BUILD_NUMBER} ."
+                        ssh -i \$SSH_KEY -o StrictHostKeyChecking=no ${params.VPS_USER}@${params.VPS_IP} "cd ${params.DEPLOY_PATH}/${params.PROJECT_NAME} && chmod +x generate-index.sh && ./generate-index.sh ${BUILD_NUMBER} . ${params.PROJECT_NAME}"
                         
                         # Generate multi-project dashboard
                         ssh -i \$SSH_KEY -o StrictHostKeyChecking=no ${params.VPS_USER}@${params.VPS_IP} "${params.DEPLOY_PATH}/generate-multi-project-index.sh ${params.DEPLOY_PATH}"
