@@ -15,9 +15,9 @@ pipeline {
             }
         }
         
-        stage('Build Docker Image') {
+        stage('Pull Docker Image') {
             steps {
-                sh 'docker build -t playwright-framework:latest .'
+                sh 'docker pull playwright-framework:latest || echo "Using local image"'
             }
         }
         
