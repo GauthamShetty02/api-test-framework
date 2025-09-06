@@ -5,7 +5,11 @@ module.exports = defineConfig({
   timeout: 30000,
   retries: 1,
   reporter: [
-    ['allure-playwright', { outputFolder: 'allure-results' }],
+    ['allure-playwright', { 
+      outputFolder: 'allure-results',
+      detail: true,
+      suiteTitle: false
+    }],
     ['html', { outputFolder: 'playwright-report' }]
   ],
   use: {

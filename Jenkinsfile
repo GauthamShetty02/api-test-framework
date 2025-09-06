@@ -15,27 +15,32 @@ pipeline {
             }
         }
         
-        stage('Pull Docker Image') {
+        stage('Build Docker Image') {
             steps {
-                sh 'docker pull playwright-framework:latest || echo "Using local image"'
+                sh 'docker build -t api-test-framework:latest .'
             }
         }
         
         stage('Cleanup Previous Results') {
             steps {
-                sh 'rm -rf allure-results logs || true'
+                sh 'rm -rf allure-results logs allure-report || true'
+                sh 'rm -rf .allure || true'
                 sh 'mkdir -p allure-results logs'
             }
         }
         
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm -v $(pwd)/allure-results:/app/allure-results -v $(pwd)/logs:/app/logs playwright-framework:latest'
+                sh 'docker run --rm -v $(pwd)/allure-results:/app/allure-results -v $(pwd)/logs:/app/logs api-test-framework:latest'
             }
         }
         
         stage('Generate Allure Report') {
             steps {
+                script {
+                    // Clean any existing allure report
+                    sh 'rm -rf ${WORKSPACE}/allure-report || true'
+                }
                 allure([
                     includeProperties: false,
                     jdk: '',
