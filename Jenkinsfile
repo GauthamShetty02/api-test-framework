@@ -17,7 +17,7 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t api-test-framework:latest .'
+                sh 'docker build -t playwright-framework:latest .'
             }
         }
         
@@ -31,7 +31,7 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm -v $(pwd)/allure-results:/app/allure-results -v $(pwd)/logs:/app/logs api-test-framework:latest'
+                sh 'docker run --rm -v $(pwd)/allure-results:/app/allure-results -v $(pwd)/logs:/app/logs playwright-framework:latest'
             }
         }
         
