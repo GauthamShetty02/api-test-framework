@@ -81,7 +81,8 @@ pipeline {
                 build job: 'playwright-dashboard-templates', parameters: [
                     string(name: 'VPS_IP', value: params.VPS_IP),
                     string(name: 'VPS_USER', value: params.VPS_USER),
-                    string(name: 'DEPLOY_PATH', value: params.DEPLOY_PATH)
+                    string(name: 'DEPLOY_PATH', value: params.DEPLOY_PATH),
+                    string(name: 'PROJECT_NAME', value: params.PROJECT_NAME)
                 ], wait: true
                 
                 withCredentials([sshUserPrivateKey(credentialsId: 'hostinger-ssh-key', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USER')]) {
