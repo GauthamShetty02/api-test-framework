@@ -1,13 +1,14 @@
 # API Test Framework
 
-This is a sample API testing project to demonstrate multi-project dashboard functionality.
+Real API testing project using Newman and Postman collections.
 
 ## Features
 
-- Mock API test execution
-- Generates sample test reports
-- Integrates with multi-project dashboard
-- Creates historical build reports
+- Newman-based API test execution
+- Postman collection with real API tests
+- Allure reporting integration
+- Docker containerized execution
+- Tests JSONPlaceholder API endpoints
 
 ## Usage
 

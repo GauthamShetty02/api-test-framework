@@ -15,38 +15,34 @@ pipeline {
             }
         }
         
-        stage('Run API Tests') {
+        stage('Pull Docker Image') {
             steps {
-                // Simulate API test execution
-                sh '''
-                    mkdir -p allure-results logs
-                    echo "API Test Results" > allure-results/test-result.json
-                    echo "$(date): API tests completed successfully" > logs/combined.log
-                    echo "$(date): No errors found" > logs/error.log
-                '''
+                sh 'docker pull playwright-framework:latest || echo "Using local image"'
             }
         }
         
-        stage('Generate Mock Allure Report') {
+        stage('Cleanup Previous Results') {
             steps {
-                // Create mock allure report
-                sh '''
-                    mkdir -p allure-report
-                    cat > allure-report/index.html << EOF
-<!DOCTYPE html>
-<html>
-<head><title>API Test Results</title></head>
-<body>
-    <h1>API Test Framework Results</h1>
-    <p>Build: ${BUILD_NUMBER}</p>
-    <p>Status: All tests passed</p>
-    <p>Total Tests: 15</p>
-    <p>Passed: 15</p>
-    <p>Failed: 0</p>
-</body>
-</html>
-EOF
-                '''
+                sh 'rm -rf allure-results logs || true'
+                sh 'mkdir -p allure-results logs'
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                sh 'docker run --rm -v $(pwd)/allure-results:/app/allure-results -v $(pwd)/logs:/app/logs playwright-framework:latest'
+            }
+        }
+        
+        stage('Generate Allure Report') {
+            steps {
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'allure-results']]
+                ])
             }
         }
         

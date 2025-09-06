@@ -1,0 +1,13 @@
+{
+  "name": "api-test-framework",
+  "version": "1.0.0",
+  "description": "API Testing Framework using Playwright",
+  "scripts": {
+    "test": "npx playwright test --reporter=allure-playwright"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.40.0",
+    "allure-playwright": "^2.9.0",
+    "playwright-test-framework-advanced": "^1.0.0"
+  }
+}
